@@ -1,1 +1,22 @@
+#map {
+    height: 90vh;
+    width: 100%;
+}
 
+.job-list {
+    height: 90vh;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.job-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.job-card:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
