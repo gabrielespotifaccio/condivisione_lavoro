@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Copenhagen Job Map</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+
+    <!-- OpenLayers Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/ol/dist/ol.css" rel="stylesheet">
+
+    <!-- Bootstrap Stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -15,16 +19,24 @@
             <button class="btn btn-primary" onclick="window.location.href='add-job.html'">Add New Job</button>
         </div>
     </nav>
+
     <div class="container-fluid">
         <div class="row">
+            <!-- Map Container -->
             <div class="col-md-9">
-                <div id="map"></div>
+                <div id="map" class="map-container"></div>
             </div>
+            <!-- Job List -->
             <div class="col-md-3">
                 <div id="jobList" class="job-list"></div>
             </div>
         </div>
     </div>
+
+    <!-- OpenLayers Script -->
+    <script src="https://cdn.jsdelivr.net/npm/ol/dist/ol.js"></script>
+
+    <!-- App Scripts -->
     <script src="js/map.js"></script>
     <script src="js/jobs.js"></script>
 </body>
