@@ -1,35 +1,42 @@
-let map;
-let markers = [];
+// Inizializzare la mappa
+const map = new ol.Map({
+    target: 'map', // Collegamento al contenitore con id="map"
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM() // Utilizziamo OpenStreetMap come base
+        })
+    ],
+    view: new ol.View({
+        center: ol.proj.fromLonLat([12.5683, 55.6761]), // Coordinate di Copenhagen
+        zoom: 12
+    })
+});
 
-function initMap() {
-    const copenhagen = { lat: 55.6761, lng: 12.5683 };
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: copenhagen,
-        zoom: 12,
-    });
-}
-
-function addMarker(position, job) {
-    const marker = new google.maps.Marker({
-        position: position,
-        map: map,
-        title: job.title
-    });
-
-    const infoWindow = new google.maps.InfoWindow({
-        content: `
-            <div>
-                <h5>${job.title}</h5>
-                <p>${job.company}</p>
-                <p>${job.description}</p>
-                <a href="#">Apply Now</a>
-            </div>
-        `
+// Funzione per aggiungere un marcatore sulla mappa
+function addMarker(longitude, latitude, job) {
+    const marker = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.fromLonLat([longitude, latitude])),
+        jobDetails: job
     });
 
-    marker.addListener("click", () => {
-        infoWindow.open(map, marker);
+    const layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [marker]
+        }),
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                src: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                scale: 0.05
+            })
+        })
     });
 
-    markers.push(marker);
+    map.addLayer(layer);
+
+    // Evento click per mostrare i dettagli del lavoro
+    map.on('singleclick', (evt) => {
+        map.forEachFeatureAtPixel(evt.pixel, (feature) => {
+            alert(`Job: ${feature.get('jobDetails').title}\nCompany: ${feature.get('jobDetails').company}`);
+        });
+    });
 }
